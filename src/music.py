@@ -9,6 +9,7 @@ class Music:
         self.sound = path
         self.music.load(self.sound)
         self.music.play()
+        self.music.set_volume(0.5)
 
     def volchange(self, volume):
         self.music.set_volume(volume)  # The set_volume range is from 0.00 to 1.00 (every 0.01)
