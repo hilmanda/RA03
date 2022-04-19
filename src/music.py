@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 530fa1bdfa1f3781a76e715ec4316af1b28a42bd
 import pygame
 
 class Music:
@@ -18,7 +14,3 @@ class Music:
         self.music.set_volume(volume)  # The set_volume range is from 0.00 to 1.00 (every 0.01)
     def isplaying(self):
         return self.music.get_busy()
-<<<<<<< HEAD
-=======
-
->>>>>>> 530fa1bdfa1f3781a76e715ec4316af1b28a42bd
