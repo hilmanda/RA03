@@ -72,7 +72,7 @@ class MainMenu(Menu):
                 self.game.curr_menu = self.game.credits
             self.run_display = False
 
-class OptionsMenu(Menu):
+class VolumeMenu(Menu):
     def __init__(self, game):
         Menu.__init__(self, game)
         self.state = 'Volume'
