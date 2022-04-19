@@ -1,4 +1,8 @@
 import pygame
+from src.music import *
+import pygame_widgets
+from pygame_widgets.slider import Slider
+
 
 class Menu():
     def __init__(self, game):
@@ -11,9 +15,9 @@ class Menu():
     def draw_cursor(self):
         self.game.draw_text('*', 15, self.cursor_rect.x, self.cursor_rect.y)
 
-    def blit_screen(self):
+    def blit_screen(self, *events):
         self.game.window.blit(self.game.display, (0, 0))
-        pygame.display.update()
+        pygame.display.update(*events)
         self.game.reset_keys()
 
 class MainMenu(Menu):
@@ -105,8 +109,31 @@ class OptionsMenu(Menu):
                 self.cursor_rect.midtop = (self.volx + self.offset, self.voly)
         elif self.game.START_KEY:
             # TO-DO: Create a Volume Menu and a Controls Menu
-            pass
+            if self.state == 'Volume':
+                self.volume_settings()
 
+    # def volume_settings(self):
+    #     self.sound_settings = Volume(self.game.song)
+    #     self.sound_settings.draw_mixer()
+
+
+class VolumeMenu(Menu):
+    def __init__(self, song):
+        self.slider = Slider(self.game.window, 100, 100, 800, 40, min=0, max=99, step=1)
+        self.song = song
+
+    def draw_mixer(self):
+        while True:
+            event = pygame.event.get()
+            
+            if self.song.isplaying():
+                self.new_volume = self.slider.getValue() / 100.0
+                self.song.volchange(self.new_volume)
+            if event == pygame.QUIT :
+                pygame.event.clear()
+                break
+            pygame_widgets.update(event)
+            pygame.display.update()
 class CreditsMenu(Menu):
     def __init__(self, game):
         Menu.__init__(self, game)
