@@ -59,9 +59,6 @@ class Game():
         text_rect.center = (x,y)
         self.display.blit(text_surface,text_rect)
 
-    def quit(self):
-        pygame.quit()
-
 
 
 
