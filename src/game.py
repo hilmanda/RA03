@@ -107,8 +107,8 @@ class Start():
         self.level = 1
         self.level_complete = False
 
-        # plants
-        self.all_plants = [f for f in os.listdir('assets/cards/') if os.path.join('assets/cards/', f)]
+        # food
+        self.all_food = [f for f in os.listdir('assets/cards/') if os.path.join('assets/cards/', f)]
 
         self.img_width, self.img_height = (128, 128)
         self.padding = 20
@@ -185,13 +185,13 @@ class Start():
                 self.flipped = []
 
     def generate_level(self, level):
-        self.plants = self.select_random_plants(self.level)
+        self.food = self.select_random_food(self.level)
         self.level_complete = False
         self.rows = self.level + 1
         self.cols = 4
-        self.generate_tileset(self.plants)
+        self.generate_tileset(self.food)
 
-    def generate_tileset(self, plants):
+    def generate_tileset(self, food):
         self.cols = self.rows = self.cols if self.cols >= self.rows else self.rows
 
         TILES_WIDTH = (self.img_width * self.cols + self.padding * 3)
@@ -199,18 +199,18 @@ class Start():
         # tiles = []
         self.tiles_group.empty()
 
-        for i in range(len(plants)):
+        for i in range(len(food)):
             x = LEFT_MARING + ((self.img_width + self.padding) * (i % self.cols))
             y = self.margin_top + (i // self.rows * (self.img_height + self.padding))
-            tile = Tile(plants[i], x, y)
+            tile = Tile(food[i], x, y)
             self.tiles_group.add(tile)
 
-    def select_random_plants(self, level):
-        plants = random.sample(self.all_plants, (self.level + self.level + 2))
-        plants_copy = plants.copy()
-        plants.extend(plants_copy)
-        random.shuffle(plants)
-        return plants
+    def select_random_food(self, level):
+        food = random.sample(self.all_food, (self.level + self.level + 2))
+        food_copy = food.copy()
+        food.extend(food_copy)
+        random.shuffle(food)
+        return food
 
     def user_input(self, event_list):
         for event in event_list:
