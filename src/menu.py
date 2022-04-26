@@ -11,7 +11,7 @@ class Menu():
         self.run_display = True
         self.cursor_rect = pygame.Rect(0, 0, 20, 20)
         self.offsetx = - 100
-        self.offsety = 2
+        self.offsety = 10
 
     def draw_cursor(self):
         self.game.draw_text('*', 30, self.cursor_rect.x, self.cursor_rect.y)
@@ -114,7 +114,7 @@ class VolumeMenu(Menu):
         self.run_display = True
         while self.run_display:
             self.game.display.fill((0, 0, 0))
-            self.game.draw_text('Set Volume', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - 30)
+            self.game.draw_text('Set Volume', 50, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - 30)
             # self.game.draw_text("Volume", 15, self.volx, self.voly)
             # self.game.draw_text("Controls", 15, self.controlsx, self.controlsy)
             self.game.check_events()
@@ -151,6 +151,6 @@ class CreditsMenu(Menu):
             self.game.display.fill(self.game.BLACK)
             # self.blit_screen()
             # self.game.window.blit(self.game.display,(0,0))
-            self.game.draw_text('Credits', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - 20)
-            self.game.draw_text('Made by me', 15, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + 10)
+            self.game.draw_text('Credits', 50, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - 20)
+            self.game.draw_text('Made by me', 30, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + 20)
             self.blit_screen()
