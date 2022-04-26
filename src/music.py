@@ -8,7 +8,7 @@ class Music:
         self.music = pygame.mixer.music
         self.sound = path
         self.music.load(self.sound)
-        self.music.play()
+        self.music.play(-1)
         self.music.set_volume(0.5)
 
     def volchange(self, volume):
