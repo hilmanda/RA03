@@ -19,10 +19,10 @@ class Game():
         self.song = Music('assets/spongebob.mp3')
         self.running, self.playing = True, False
         self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
-        self.DISPLAY_W, self.DISPLAY_H = 1200, 800
+        WINDOW_WIDTH, WINDOW_HEIGHT = 1200, 800
         # self.display = pygame.image.load('assets/mainmenubg.jpg')
-        self.window = pygame.display.set_mode((self.DISPLAY_W,self.DISPLAY_H))
-        self.display = pygame.Surface((self.DISPLAY_W,self.DISPLAY_H))
+        self.window = pygame.display.set_mode((WINDOW_WIDTH,WINDOW_HEIGHT))
+        self.display = pygame.Surface((WINDOW_WIDTH,WINDOW_HEIGHT))
         # self.font_name = '8-BIT WONDER.TTF'
         self.font_name = 'assets/fonts/font.ttf'
         self.BLACK, self.WHITE = (0, 0, 0), (255, 255, 255)
@@ -33,7 +33,6 @@ class Game():
 
     def game_loop(self):
         game = Start()
-        clock = pygame.time.Clock()
         while self.playing:
             event_list = pygame.event.get()
             for event in event_list:
@@ -115,7 +114,7 @@ class Start():
         self.margin_top = 160
         self.cols = 4
         self.rows = 2
-        self.width = 1280
+        self.width = WINDOW_WIDTH
 
         self.tiles_group = pygame.sprite.Group()
 
@@ -195,12 +194,12 @@ class Start():
         self.cols = self.rows = self.cols if self.cols >= self.rows else self.rows
 
         TILES_WIDTH = (self.img_width * self.cols + self.padding * 3)
-        LEFT_MARING = RIGHT_MARGIN = (self.width - TILES_WIDTH) // 2
+        LEFT_MARGIN = RIGHT_MARGIN = (self.width - TILES_WIDTH) // 2
         # tiles = []
         self.tiles_group.empty()
 
         for i in range(len(food)):
-            x = LEFT_MARING + ((self.img_width + self.padding) * (i % self.cols))
+            x = LEFT_MARGIN + ((self.img_width + self.padding) * (i % self.cols))
             y = self.margin_top + (i // self.rows * (self.img_height + self.padding))
             tile = Tile(food[i], x, y)
             self.tiles_group.add(tile)
