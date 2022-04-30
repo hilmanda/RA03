@@ -19,10 +19,10 @@ class Game():
         self.song = Music('assets/spongebob.mp3')
         self.running, self.playing = True, False
         self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
-        WINDOW_WIDTH, WINDOW_HEIGHT = 1200, 800
+        self.DISPLAY_W, self.DISPLAY_H = 1200, 800
         # self.display = pygame.image.load('assets/mainmenubg.jpg')
-        self.window = pygame.display.set_mode((WINDOW_WIDTH,WINDOW_HEIGHT))
-        self.display = pygame.Surface((WINDOW_WIDTH,WINDOW_HEIGHT))
+        self.window = pygame.display.set_mode((self.DISPLAY_W,self.DISPLAY_H))
+        self.display = pygame.Surface((self.DISPLAY_W,self.DISPLAY_H))
         # self.font_name = '8-BIT WONDER.TTF'
         self.font_name = 'assets/fonts/font.ttf'
         self.BLACK, self.WHITE = (0, 0, 0), (255, 255, 255)
