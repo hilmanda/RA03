@@ -5,8 +5,7 @@ import random
 from src.menu import *
 from src.music import *
 
-WINDOW_WIDTH = 1200
-WINDOW_HEIGHT = 800
+WINDOW = WINDOW_WIDTH, WINDOW_HEIGHT = 1200, 800
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 BLACK = (0, 0, 0)
@@ -19,14 +18,17 @@ class Game():
         self.song = Music('assets/spongebob.mp3')
         self.running, self.playing = True, False
         self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
-        self.DISPLAY_W, self.DISPLAY_H = 1200, 800
-        # self.display = pygame.image.load('assets/mainmenubg.jpg')
+        self.DISPLAY = self.DISPLAY_W, self.DISPLAY_H = 1200, 800
+        self.mainbackground = pygame.image.load('assets/mainmenubg.jpg').convert()
+        self.mainbackground = pygame.transform.scale(self.mainbackground,self.DISPLAY)
+        self.display = self.mainbackground.copy()
         self.window = pygame.display.set_mode((self.DISPLAY_W,self.DISPLAY_H))
-        self.display = pygame.Surface((self.DISPLAY_W,self.DISPLAY_H))
+        # self.display = pygame.Surface((self.DISPLAY_W, self.DISPLAY_H))
         # self.font_name = '8-BIT WONDER.TTF'
         self.font_name = 'assets/fonts/font.ttf'
         self.BLACK, self.WHITE = (0, 0, 0), (255, 255, 255)
         self.main_menu = MainMenu(self)
+        self.difficulty = DifficultyMenu(self)
         self.volume = VolumeMenu(self)
         self.credits = CreditsMenu(self)
         self.curr_menu = self.main_menu
@@ -68,12 +70,17 @@ class Game():
     def reset_keys(self):
         self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
 
-    def draw_text(self, text, size, x, y ):
+    def draw_text(self, text, size, x, y, color = WHITE ):
         font = pygame.font.Font(self.font_name,size)
-        text_surface = font.render(text, True, self.WHITE)
+        text_surface = font.render(text, True, color)
         text_rect = text_surface.get_rect()
         text_rect.center = (x,y)
         self.display.blit(text_surface,text_rect)
+    
+    def clear_text(self):
+        self.display = self.mainbackground.copy()
+        
+
 
 
 class Tile(pygame.sprite.Sprite):
@@ -284,9 +291,7 @@ class Start():
             screen.blit(next_text, next_rect)
 
     def get_video(self):
-        self.img = cv2.imread('assets/images/mainmenubg.jpg')
+        self.img = cv2.imread('assets/images/playbg.jpeg')
         self.img = cv2.resize(self.img,dsize=(WINDOW_WIDTH,WINDOW_HEIGHT-110))
         self.success = True
-        # self.cap = cv2.VideoCapture('video/clouds.mp4')
-        # self.success, self.img = self.cap.read()
         self.shape = self.img.shape[1::-1]
