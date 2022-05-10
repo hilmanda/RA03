@@ -3,9 +3,6 @@ from src.menu import *
 from src.music import *
 from src.start import *
 from src.game import *
-
-WHITE = (255, 255, 255)
-
 class Tile(pygame.sprite.Sprite):
     def __init__(self, filename, x, y):
         super().__init__()
@@ -14,8 +11,8 @@ class Tile(pygame.sprite.Sprite):
 
         self.original_image = pygame.image.load('assets/cards/' + filename)
 
-        self.back_image = pygame.image.load('assets/cards/' + filename)
-        pygame.draw.rect(self.back_image, WHITE, self.back_image.get_rect())
+        self.back_image = pygame.image.load('assets/back.jpg')
+        # pygame.draw.rect(self.back_image, self.back_image, self.back_image.get_rect())
 
         self.image = self.back_image
         self.rect = self.image.get_rect(topleft=(x, y))

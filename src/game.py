@@ -37,7 +37,7 @@ class Game():
                     pygame.quit()
                     quit()
                 if event.type == pygame.KEYDOWN :
-                    if event.key == pygame.K_ESCAPE:
+                    if event.key == pygame.K_ESCAPE or event.key == pygame.K_4:
                         self.playing = False
 
             game.update(event_list)
