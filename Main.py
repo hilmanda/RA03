@@ -1,7 +1,7 @@
 import pygame
 import PySimpleGUI as PSG
 
-from music import Music, Volume
+from music import *
 
 pygame.init()
 pygame.font.init()
