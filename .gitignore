@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+#tes files
+tes_menu.py
+
 # C extensions
 *.so
 
