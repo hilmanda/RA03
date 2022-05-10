@@ -7,7 +7,7 @@ from src.music import *
 from src.game import *
 from src.tile import *
 
-WINDOW_WIDTH = 1280
+WINDOW_WIDTH = 1200
 WINDOW_HEIGHT = 800
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
@@ -149,7 +149,7 @@ class Start():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE and self.level_complete:
                     self.level += 1
-                    if self.level >= 6:
+                    if self.level >=3:
                         self.level = 1
                     self.generate_level(self.level)
 
@@ -199,9 +199,7 @@ class Start():
             screen.blit(next_text, next_rect)
 
     def get_video(self):
-        self.img = cv2.imread('assets/images/mainmenubg.jpg')
+        self.img = cv2.imread('assets/images/playbg.jpeg')
         self.img = cv2.resize(self.img,dsize=(WINDOW_WIDTH,WINDOW_HEIGHT-110))
         self.success = True
-        # self.cap = cv2.VideoCapture('video/clouds.mp4')
-        # self.success, self.img = self.cap.read()
         self.shape = self.img.shape[1::-1]
