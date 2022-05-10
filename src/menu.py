@@ -15,7 +15,7 @@ class Menu():
         self.offsety = 10
 
     def draw_cursor(self, text):
-        self.game.draw_text(text, 39, self.cursor_rect[0], self.cursor_rect[1], self.BROWN)
+        self.game.draw_text(text, 49, self.cursor_rect[0], self.cursor_rect[1], self.BROWN)
 
     def blit_screen(self):
         self.game.window.blit(self.game.display, (0, 0))
@@ -27,9 +27,8 @@ class MainMenu(Menu):
         Menu.__init__(self, game)
         self.state = "Start"
         self.startx, self.starty = self.mid_w, self.mid_h
-        self.difx, self.dify = self.mid_w, self.mid_h + 50
-        self.volumex, self.volumey = self.mid_w, self.mid_h + 100
-        self.creditsx, self.creditsy = self.mid_w, self.mid_h + 150
+        self.volumex, self.volumey = self.mid_w, self.mid_h + 50
+        self.creditsx, self.creditsy = self.mid_w, self.mid_h + 100
         self.cursor_rect = (self.startx, self.starty)
 
     def display_menu(self):
@@ -39,10 +38,9 @@ class MainMenu(Menu):
             self.check_input()
             # self.game.display.fill(self.game.BLACK)
             self.game.draw_text('Main Menu', 80, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5)
-            self.game.draw_text("Start", 40, self.startx, self.starty)
-            self.game.draw_text("Difficulty", 40, self.difx, self.dify)
-            self.game.draw_text("Volume", 40, self.volumex, self.volumey)
-            self.game.draw_text("Credits", 40, self.creditsx, self.creditsy)
+            self.game.draw_text("Start", 50, self.startx, self.starty)
+            self.game.draw_text("Volume", 50, self.volumex, self.volumey)
+            self.game.draw_text("Credits", 50, self.creditsx, self.creditsy)
             self.draw_cursor(self.state)
             self.blit_screen()
         # self.game.clear_text()
@@ -51,9 +49,6 @@ class MainMenu(Menu):
     def move_cursor(self):
         if self.game.DOWN_KEY:
             if self.state == 'Start':
-                self.cursor_rect = (self.difx, self.dify)
-                self.state = 'Difficulty'
-            elif self.state == 'Difficulty':
                 self.cursor_rect = (self.volumex , self.volumey)
                 self.state = 'Volume'
             elif self.state == 'Volume':
@@ -67,12 +62,9 @@ class MainMenu(Menu):
             if self.state == 'Start':
                 self.cursor_rect = (self.creditsx , self.creditsy)
                 self.state = 'Credits'
-            elif self.state == 'Difficulty':
+            elif self.state == 'Volume':
                 self.cursor_rect = (self.startx , self.starty)
                 self.state = 'Start'
-            elif self.state == 'Volume':
-                self.cursor_rect = (self.difx , self.dify)
-                self.state = 'Difficulty'
             elif self.state == 'Credits':
                 self.cursor_rect = (self.volumex , self.volumey)
                 self.state = 'Volume'
@@ -152,8 +144,13 @@ class CreditsMenu(Menu):
                 self.run_display = False
             # self.game.display.fill(self.game.BLACK)
             self.game.clear_text()
-            self.game.draw_text('Credits', 50, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - 20)
-            self.game.draw_text('Made by me', 30, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + 20)
+            self.game.draw_text('Credits', 80, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5)
+            self.game.draw_text('Jesika Putri', 25, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 100)
+            self.game.draw_text('Hilmanda Panji Orienski', 25, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 150)
+            self.game.draw_text('Bilhaq Avi Dewantara', 25, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 200)
+            self.game.draw_text('Gery Melia Suwanda', 25, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 250)
+            self.game.draw_text('Fadhilah Fauza Hamda', 25, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 300)
+            self.game.draw_text('CHaterine Sidabutar', 25, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 350)
             self.blit_screen()
         self.game.clear_text()
         
