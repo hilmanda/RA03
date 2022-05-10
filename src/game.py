@@ -14,7 +14,7 @@ class Game():
         self.running, self.playing = True, False
         self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
         self.DISPLAY = self.DISPLAY_W, self.DISPLAY_H = 1200, 800
-        self.mainbackground = pygame.image.load('assets/mainmenubg.jpg').convert()
+        self.mainbackground = pygame.image.load('assets/mainbg.jpg').convert()
         self.mainbackground = pygame.transform.scale(self.mainbackground,self.DISPLAY)
         self.display = self.mainbackground.copy()
         self.window = pygame.display.set_mode((self.DISPLAY_W,self.DISPLAY_H))

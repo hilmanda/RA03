@@ -6,16 +6,16 @@ from src.music import *
 
 class Menu():
     def __init__(self, game):
-        self.BROWN = (0,128,0)
+        self.GREEN = (0,128,0)
         self.game = game
-        self.mid_w, self.mid_h = self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 3
+        self.mid_w, self.mid_h = self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - 100
         self.run_display = True
         self.cursor_rect = pygame.Rect(0, 0, 20, 20)
         self.offsetx = - 100
         self.offsety = 10
 
     def draw_cursor(self, text):
-        self.game.draw_text(text, 49, self.cursor_rect[0], self.cursor_rect[1], self.BROWN)
+        self.game.draw_text(text, 49, self.cursor_rect[0], self.cursor_rect[1], self.GREEN)
 
     def blit_screen(self):
         self.game.window.blit(self.game.display, (0, 0))
@@ -37,7 +37,7 @@ class MainMenu(Menu):
             self.game.check_events()
             self.check_input()
             # self.game.display.fill(self.game.BLACK)
-            self.game.draw_text('Main Menu', 80, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5)
+            self.game.draw_text('Main Menu', 80, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 4)
             self.game.draw_text("Start", 50, self.startx, self.starty)
             self.game.draw_text("Volume", 50, self.volumex, self.volumey)
             self.game.draw_text("Credits", 50, self.creditsx, self.creditsy)
@@ -115,7 +115,7 @@ class VolumeMenu(Menu):
             pygame.display.update()
             self.new_volume = self.slider.getValue() / 100.0
             self.game.song.volchange(self.new_volume)
-            self.game.draw_text('Set Volume', 50, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5)
+            self.game.draw_text('Set Volume', 50, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 4)
             self.game.window.blit(self.game.display, (0, 0))
             self.game.reset_keys()
         self.game.clear_text()
@@ -144,13 +144,15 @@ class CreditsMenu(Menu):
                 self.run_display = False
             # self.game.display.fill(self.game.BLACK)
             self.game.clear_text()
-            self.game.draw_text('Credits', 80, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5)
-            self.game.draw_text('Jesika Putri', 25, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 100)
-            self.game.draw_text('Hilmanda Panji Orienski', 25, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 150)
-            self.game.draw_text('Bilhaq Avi Dewantara', 25, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 200)
-            self.game.draw_text('Gery Melia Suwanda', 25, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 250)
-            self.game.draw_text('Fadhilah Fauza Hamda', 25, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 300)
-            self.game.draw_text('CHaterine Sidabutar', 25, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 350)
+            self.game.draw_text('Credits', 70, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 4)
+            self.game.draw_text('AUTHOR :', 30, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 110, '#000000')
+            self.game.draw_text('120140050, 120140131, 120140141, 120140147, 120140153, 120140199', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 150)
+            self.game.draw_text('SONG :', 30, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 200, '#000000')
+            self.game.draw_text('OST SPONGEBOB SQUAREPANTS', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 240)
+            self.game.draw_text('IMAGES :', 30, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 290, '#000000')
+            self.game.draw_text('Vecteezy.com', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 340)
+            self.game.draw_text('wallpaperaccess.com', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 370)
+            
             self.blit_screen()
         self.game.clear_text()
         

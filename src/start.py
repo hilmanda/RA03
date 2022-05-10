@@ -195,7 +195,7 @@ class Start():
             screen.blit(next_text, next_rect)
 
     def get_video(self):
-        self.img = cv2.imread('assets/images/playbg.jpeg')
+        self.img = cv2.imread('assets/images/playbg.jpg')
         self.img = cv2.resize(self.img,dsize=(WINDOW_WIDTH, WINDOW_HEIGHT))
         self.success = True
         self.shape = self.img.shape[1::-1]
