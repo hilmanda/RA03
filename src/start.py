@@ -40,7 +40,7 @@ class Start():
         # generate first level
         self.generate_level(self.level)
 
-        # initialize video
+        # initialize video button
         self.is_video_playing = True
         self.play = pygame.image.load('assets/images/play2.png').convert_alpha()
         self.stop = pygame.image.load('assets/images/pause2.png').convert_alpha()
@@ -48,17 +48,12 @@ class Start():
         self.video_toggle_rect = self.video_toggle.get_rect(topright=(WINDOW_WIDTH - 50, 10))
         self.get_video()
 
-        # initialize music
+        # initialize music button
         self.is_music_playing = True
         self.sound_on = pygame.image.load('assets/images/sound2.png').convert_alpha()
         self.sound_off = pygame.image.load('assets/images/mute2.png').convert_alpha()
         self.music_toggle = self.sound_on
         self.music_toggle_rect = self.music_toggle.get_rect(topright=(WINDOW_WIDTH - -1, 10))
-
-        # load music
-        # pygame.mixer.music.load('assets/spongebob.mp3')
-        # pygame.mixer.music.set_volume(.3)
-        # pygame.mixer.music.play()
 
     def update(self, event_list):
         # if self.is_video_playing:
@@ -146,10 +141,11 @@ class Start():
                         self.is_video_playing = True
                         self.video_toggle = self.play
 
+        #set level here
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE and self.level_complete:
                     self.level += 1
-                    if self.level >=3:
+                    if self.level > 3:
                         self.level = 1
                     self.generate_level(self.level)
 
@@ -172,11 +168,11 @@ class Start():
 
         if self.is_video_playing:
             if self.success:
-                screen.blit(pygame.image.frombuffer(self.img.tobytes(), self.shape, 'BGR'), (0, 120))
+                screen.blit(pygame.image.frombuffer(self.img.tobytes(), self.shape, 'BGR'), (0, 0))
             else:
                 self.get_video()
         else:
-            screen.blit(pygame.image.frombuffer(self.img.tobytes(), self.shape, 'BGR'), (0, 120))
+            screen.blit(pygame.image.frombuffer(self.img.tobytes(), self.shape, 'BGR'), (0, 0))
 
         if self.level < 3:
             next_text = content_font.render('Tekan Spasi untuk level selanjutnya!', True, WHITE)
@@ -187,7 +183,7 @@ class Start():
         screen.blit(title_text, title_rect)
         screen.blit(level_text, level_rect)
         screen.blit(info_text, info_rect)
-        pygame.draw.rect(screen, BLACK, (WINDOW_WIDTH - 110, 0, 130, 70))
+        # pygame.draw.rect(screen, WHITE, (WINDOW_WIDTH - 110, 0, 130, 70))
         screen.blit(self.video_toggle, self.video_toggle_rect)
         screen.blit(self.music_toggle, self.music_toggle_rect)
 
@@ -200,6 +196,6 @@ class Start():
 
     def get_video(self):
         self.img = cv2.imread('assets/images/playbg.jpeg')
-        self.img = cv2.resize(self.img,dsize=(WINDOW_WIDTH,WINDOW_HEIGHT-110))
+        self.img = cv2.resize(self.img,dsize=(WINDOW_WIDTH, WINDOW_HEIGHT))
         self.success = True
         self.shape = self.img.shape[1::-1]
