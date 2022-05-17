@@ -1,7 +1,4 @@
 # import pygame
-# import cv2
-# import os
-# import random
 # from src.menu import *
 # from src.music import *
 # from src.game import *

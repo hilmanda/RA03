@@ -16,8 +16,8 @@ FPS = 60
 screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
 class Start():
-    def __init__(self):
-        self.level = 1
+    def __init__(self, difficulty):
+        self.difficulty = difficulty
         self.level_complete = False
 
         # food
@@ -38,7 +38,7 @@ class Start():
         self.block_game = False
 
         # generate first level
-        self.generate_level(self.level)
+        self.generate_level(self.difficulty)
 
         # initialize video button
         self.is_video_playing = True
@@ -56,8 +56,6 @@ class Start():
         self.music_toggle_rect = self.music_toggle.get_rect(topright=(WINDOW_WIDTH - -1, 10))
 
     def update(self, event_list):
-        # if self.is_video_playing:
-        #     self.success, self.img = self.cap.read()
         self.user_input(event_list)
         self.draw()
         self.check_level_complete(event_list)
@@ -93,9 +91,9 @@ class Start():
                 self.flipped = []
 
     def generate_level(self, level):
-        self.food = self.select_random_food(self.level)
+        self.food = self.select_random_food(level)
         self.level_complete = False
-        self.rows = self.level + 1
+        self.rows = level + 1
         self.cols = 4
         self.generate_tileset(self.food)
 
@@ -114,7 +112,7 @@ class Start():
             self.tiles_group.add(tile)
 
     def select_random_food(self, level):
-        food = random.sample(self.all_food, (self.level + self.level + 2))
+        food = random.sample(self.all_food, (level + level + 2))
         food_copy = food.copy()
         food.extend(food_copy)
         random.shuffle(food)
@@ -144,10 +142,10 @@ class Start():
         #set level here
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE and self.level_complete:
-                    self.level += 1
-                    if self.level > 3:
-                        self.level = 1
-                    self.generate_level(self.level)
+                    self.difficulty += 1
+                    if self.difficulty > 3:
+                        self.difficulty = 1
+                    self.generate_level(self.difficulty)
 
     def draw(self):
         screen.fill(BLACK)
@@ -160,7 +158,7 @@ class Start():
         title_text = title_font.render('Memory Game', True, WHITE)
         title_rect = title_text.get_rect(midtop=(WINDOW_WIDTH // 2, 10))
 
-        level_text = content_font.render('Level ' + str(self.level), True, WHITE)
+        level_text = content_font.render('Level ' + str(self.difficulty), True, WHITE)
         level_rect = level_text.get_rect(midtop=(WINDOW_WIDTH // 2, 80))
 
         info_text = content_font.render('Temukan Pasangan Gambar yang Sama', True, WHITE)
@@ -174,7 +172,7 @@ class Start():
         else:
             screen.blit(pygame.image.frombuffer(self.img.tobytes(), self.shape, 'BGR'), (0, 0))
 
-        if self.level < 3:
+        if self.difficulty < 3:
             next_text = content_font.render('Tekan Spasi untuk level selanjutnya!', True, WHITE)
         else:
             next_text = content_font.render('Selamat kamu menang!!! Tekan spasi untuk memulai lagi', True, WHITE)
@@ -183,7 +181,6 @@ class Start():
         screen.blit(title_text, title_rect)
         screen.blit(level_text, level_rect)
         screen.blit(info_text, info_rect)
-        # pygame.draw.rect(screen, WHITE, (WINDOW_WIDTH - 110, 0, 130, 70))
         screen.blit(self.video_toggle, self.video_toggle_rect)
         screen.blit(self.music_toggle, self.music_toggle_rect)
 

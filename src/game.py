@@ -2,6 +2,7 @@ import pygame
 from src.menu import *
 from src.music import *
 from src.start import *
+from src.start import Start
 
 WINDOW = WINDOW_WIDTH, WINDOW_HEIGHT = 1200, 800
 WHITE = (255, 255, 255)
@@ -18,8 +19,6 @@ class Game():
         self.mainbackground = pygame.transform.scale(self.mainbackground,self.DISPLAY)
         self.display = self.mainbackground.copy()
         self.window = pygame.display.set_mode((self.DISPLAY_W,self.DISPLAY_H))
-        # self.display = pygame.Surface((self.DISPLAY_W, self.DISPLAY_H))
-        # self.font_name = '8-BIT WONDER.TTF'
         self.font_name = 'assets/fonts/font.ttf'
         self.BLACK, self.WHITE = (0, 0, 0), (255, 255, 255)
         self.main_menu = MainMenu(self)
@@ -27,9 +26,10 @@ class Game():
         self.volume = VolumeMenu(self)
         self.credits = CreditsMenu(self)
         self.curr_menu = self.main_menu
+        self.gameOver = False
 
-    def game_loop(self):
-        game = Start()
+    def game_loop(self,difficulty):
+        game = Start(difficulty)
         while self.playing:
             event_list = pygame.event.get()
             for event in event_list:
@@ -37,8 +37,10 @@ class Game():
                     pygame.quit()
                     quit()
                 if event.type == pygame.KEYDOWN :
-                    if event.key == pygame.K_ESCAPE or event.key == pygame.K_4:
+                    if event.key == pygame.K_BACKSPACE :
                         self.playing = False
+                    if event.key == pygame.K_ESCAPE:
+                        self.gameOver = True
 
             game.update(event_list)
 
