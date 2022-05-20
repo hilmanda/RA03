@@ -30,6 +30,8 @@ class Start():
         self.rows = 2
         self.width = WINDOW_WIDTH
 
+        self.__score = 0
+
         self.tiles_group = pygame.sprite.Group()
 
         # flipping & timing
@@ -55,6 +57,12 @@ class Start():
         self.music_toggle = self.sound_on
         self.music_toggle_rect = self.music_toggle.get_rect(topright=(WINDOW_WIDTH - -1, 10))
 
+    def add_score(self) :
+        self.__score += 100
+
+    def view_score (self) :
+        print(self.__score)
+
     def update(self, event_list):
         self.user_input(event_list)
         self.draw()
@@ -72,6 +80,8 @@ class Start():
                                 if self.flipped[0] != self.flipped[1]:
                                     self.block_game = True
                                 else:
+                                    self.add_score()
+                                    self.view_score()
                                     self.flipped = []
                                     for tile in self.tiles_group:
                                         if tile.shown:
