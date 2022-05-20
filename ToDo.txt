@@ -1,0 +1,5 @@
+To Do :
+1. Timer
+2. Difficulty : Easy, Medium, Hard
+3. Bonus
+4. Game Over
