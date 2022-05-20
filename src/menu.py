@@ -83,7 +83,7 @@ class MainMenu(Menu):
             if self.state == 'Start':
                 self.game.playing = True
             elif self.state == 'Difficulty':
-                self.game.curr_menu =self.game.difficulty
+                self.game.curr_menu =self.game.difficulty_menu
             elif self.state == 'Volume':
                 self.game.curr_menu = self.game.volume
             elif self.state == 'Credits':
@@ -94,27 +94,63 @@ class DifficultyMenu(Menu):
     def __init__(self, game):
         Menu.__init__(self, game)
         self.state = 'Difficulty'
-        self.difficulty = 1
-    
+        self.difficulty_state = 'Easy'
+        self.startx, self.starty = self.mid_w, self.mid_h
+        self.difficultx, self.difficulty = self.mid_w, self.mid_h +50
+        self.volumex, self.volumey = self.mid_w, self.mid_h + 100
+        self.creditsx, self.creditsy = self.mid_w, self.mid_h + 150
+        self.cursor_rect = (self.startx, self.starty)
+
     def display_menu(self):
         self.run_display = True
         while self.run_display:
-            self.game.check_events()
-            if self.game.START_KEY or self.game.BACK_KEY:
-                self.game.curr_menu = self.game.main_menu
-                self.run_display = False
             self.game.clear_text()
-            self.game.draw_text('Credits', 70, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 4)
-            self.game.draw_text('AUTHOR :', 30, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 110, '#000000')
-            self.game.draw_text('120140050, 120140131, 120140141, 120140147, 120140153, 120140199', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 150)
-            self.game.draw_text('SONG :', 30, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 200, '#000000')
-            self.game.draw_text('OST SPONGEBOB SQUAREPANTS', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 240)
-            self.game.draw_text('IMAGES :', 30, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 290, '#000000')
-            self.game.draw_text('Vecteezy.com', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 340)
-            self.game.draw_text('wallpaperaccess.com', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 370)
-            
+            self.game.check_events()
+            self.check_input()
+            self.game.draw_text('Choose Difficulty', 80, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 4)
+            self.game.draw_text("Easy", 50, self.startx, self.starty)
+            self.game.draw_text("Medium", 50, self.difficultx, self.difficulty)
+            self.game.draw_text("Hard", 50, self.volumex, self.volumey)
+            self.draw_cursor(self.difficulty_state)
             self.blit_screen()
         self.game.clear_text()
+
+
+    def move_cursor(self):
+        if self.game.DOWN_KEY:
+            if self.difficulty_state == 'Easy':
+                self.cursor_rect = (self.difficultx , self.difficulty)
+                self.difficulty_state = 'Medium'
+            elif self.difficulty_state == 'Medium':
+                self.cursor_rect = (self.volumex , self.volumey)
+                self.difficulty_state = 'Hard'
+            elif self.difficulty_state == 'Hard':
+                self.cursor_rect = (self.startx , self.starty)
+                self.difficulty_state = 'Easy'
+                
+        elif self.game.UP_KEY:
+            if self.difficulty_state == 'Easy':
+                self.cursor_rect = (self.volumex , self.volumey)
+                self.difficulty_state = 'Hard'
+            if self.difficulty_state == 'Medium':
+                self.cursor_rect = (self.startx , self.starty)
+                self.difficulty_state = 'Easy'
+            elif self.difficulty_state == 'Hard':
+                self.cursor_rect = (self.difficultx , self.difficulty)
+                self.difficulty_state = 'Medium'
+
+    def check_input(self):
+        self.move_cursor()
+        if self.game.START_KEY:
+            if self.difficulty_state == 'Easy':
+                self.game.difficulty = 1
+            elif self.difficulty_state == 'Medium':
+                self.game.difficulty = 2
+            elif self.difficulty_state == 'Hard':
+                self.game.difficulty = 3
+            self.game.curr_menu = self.game.main_menu
+            self.run_display = False
+            
 
 
 class VolumeMenu(Menu):

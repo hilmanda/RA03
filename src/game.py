@@ -22,14 +22,15 @@ class Game():
         self.font_name = 'assets/fonts/font.ttf'
         self.BLACK, self.WHITE = (0, 0, 0), (255, 255, 255)
         self.main_menu = MainMenu(self)
-        self.difficulty = DifficultyMenu(self)
+        self.difficulty_menu = DifficultyMenu(self)
         self.volume = VolumeMenu(self)
         self.credits = CreditsMenu(self)
         self.curr_menu = self.main_menu
+        self.difficulty = 1
         self.gameOver = False
 
-    def game_loop(self,difficulty):
-        game = Start(difficulty)
+    def game_loop(self):
+        game = Start(self.difficulty)
         while self.playing:
             event_list = pygame.event.get()
             for event in event_list:

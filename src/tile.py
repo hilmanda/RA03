@@ -13,7 +13,6 @@ class Tile(pygame.sprite.Sprite):
         self.original_image = pygame.image.load('assets/cards/' + filename)
 
         self.back_image = pygame.image.load('assets/back.jpg')
-        # pygame.draw.rect(self.back_image, self.back_image, self.back_image.get_rect())
 
         self.image = self.back_image
         self.rect = self.image.get_rect(topleft=(x, y))
