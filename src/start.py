@@ -36,13 +36,14 @@ class Start():
 
         # flipping & timing
         self.flipped = []
+        self.flipped_group = []
         self.frame_count = 0
         self.block_game = False
 
-        # generate first level
+        # generate level
         self.generate_level(self.difficulty)
 
-        # initialize video button
+        # initialize sound button
         self.is_video_playing = True
         self.play = pygame.image.load('assets/images/play2.png').convert_alpha()
         self.stop = pygame.image.load('assets/images/pause2.png').convert_alpha()
@@ -55,13 +56,16 @@ class Start():
         self.sound_on = pygame.image.load('assets/images/sound2.png').convert_alpha()
         self.sound_off = pygame.image.load('assets/images/mute2.png').convert_alpha()
         self.music_toggle = self.sound_on
-        self.music_toggle_rect = self.music_toggle.get_rect(topright=(WINDOW_WIDTH - -1, 10))
+        self.music_toggle_rect = self.music_toggle.get_rect(topright=(WINDOW_WIDTH -1, 10))
 
     def add_score(self) :
         self.__score += 100
 
     def view_score (self) :
-        print(self.__score)
+        return self.__score
+    
+    def add_flipped_group(self, flipped):
+        self.flipped_group.extend(flipped)
 
     def update(self, event_list):
         self.user_input(event_list)
@@ -73,15 +77,15 @@ class Start():
             for event in event_list:
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     for tile in self.tiles_group:
-                        if tile.rect.collidepoint(event.pos):
-                            self.flipped.append(tile.name)
+                        if tile.rect.collidepoint(event.pos) and tile not in self.flipped_group:
+                            self.flipped.append(tile)
                             tile.show()
                             if len(self.flipped) == 2:
-                                if self.flipped[0] != self.flipped[1]:
+                                if self.flipped[0].name != self.flipped[1].name:
                                     self.block_game = True
-                                else:
+                                elif self.flipped[0].position() != self.flipped[1].position():
                                     self.add_score()
-                                    self.view_score()
+                                    self.add_flipped_group(self.flipped)
                                     self.flipped = []
                                     for tile in self.tiles_group:
                                         if tile.shown:
@@ -89,6 +93,8 @@ class Start():
                                         else:
                                             self.level_complete = False
                                             break
+                                else:
+                                    self.block_game = True
         else:
             self.frame_count += 1
             if self.frame_count == FPS:
@@ -96,7 +102,7 @@ class Start():
                 self.block_game = False
 
                 for tile in self.tiles_group:
-                    if tile.name in self.flipped:
+                    if tile in self.flipped:
                         tile.hide()
                 self.flipped = []
 
@@ -152,9 +158,6 @@ class Start():
         #set level here
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE and self.level_complete:
-                    self.difficulty += 1
-                    if self.difficulty > 3:
-                        self.difficulty = 1
                     self.generate_level(self.difficulty)
 
     def draw(self):
@@ -168,7 +171,7 @@ class Start():
         title_text = title_font.render('Memory Game', True, WHITE)
         title_rect = title_text.get_rect(midtop=(WINDOW_WIDTH // 2, 10))
 
-        level_text = content_font.render('Level ' + str(self.difficulty), True, WHITE)
+        level_text = content_font.render('Score : ' + str(self.view_score()), True, WHITE)
         level_rect = level_text.get_rect(midtop=(WINDOW_WIDTH // 2, 80))
 
         info_text = content_font.render('Temukan Pasangan Gambar yang Sama', True, WHITE)
