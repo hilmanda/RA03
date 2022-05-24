@@ -95,11 +95,10 @@ class DifficultyMenu(Menu):
         Menu.__init__(self, game)
         self.state = 'Difficulty'
         self.difficulty_state = 'Easy'
-        self.startx, self.starty = self.mid_w, self.mid_h
-        self.difficultx, self.difficulty = self.mid_w, self.mid_h +50
-        self.volumex, self.volumey = self.mid_w, self.mid_h + 100
-        self.creditsx, self.creditsy = self.mid_w, self.mid_h + 150
-        self.cursor_rect = (self.startx, self.starty)
+        self.easyx, self.easyy = self.mid_w, self.mid_h
+        self.mediumx, self.mediumy = self.mid_w, self.mid_h +50
+        self.hardx, self.hardy = self.mid_w, self.mid_h + 100
+        self.cursor_rect = (self.easyx, self.easyy)
 
     def display_menu(self):
         self.run_display = True
@@ -107,10 +106,10 @@ class DifficultyMenu(Menu):
             self.game.clear_text()
             self.game.check_events()
             self.check_input()
-            self.game.draw_text('Choose Difficulty', 80, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 4)
-            self.game.draw_text("Easy", 50, self.startx, self.starty)
-            self.game.draw_text("Medium", 50, self.difficultx, self.difficulty)
-            self.game.draw_text("Hard", 50, self.volumex, self.volumey)
+            self.game.draw_text('Select Difficulty', 80, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 4)
+            self.game.draw_text("Easy", 50, self.easyx, self.easyy)
+            self.game.draw_text("Medium", 50, self.mediumx, self.mediumy)
+            self.game.draw_text("Hard", 50, self.hardx, self.hardy)
             self.draw_cursor(self.difficulty_state)
             self.blit_screen()
         self.game.clear_text()
@@ -119,24 +118,24 @@ class DifficultyMenu(Menu):
     def move_cursor(self):
         if self.game.DOWN_KEY:
             if self.difficulty_state == 'Easy':
-                self.cursor_rect = (self.difficultx , self.difficulty)
+                self.cursor_rect = (self.mediumx , self.mediumy)
                 self.difficulty_state = 'Medium'
             elif self.difficulty_state == 'Medium':
-                self.cursor_rect = (self.volumex , self.volumey)
+                self.cursor_rect = (self.hardx , self.hardy)
                 self.difficulty_state = 'Hard'
             elif self.difficulty_state == 'Hard':
-                self.cursor_rect = (self.startx , self.starty)
+                self.cursor_rect = (self.easyx , self.easyy)
                 self.difficulty_state = 'Easy'
                 
         elif self.game.UP_KEY:
             if self.difficulty_state == 'Easy':
-                self.cursor_rect = (self.volumex , self.volumey)
+                self.cursor_rect = (self.hardx , self.hardy)
                 self.difficulty_state = 'Hard'
             if self.difficulty_state == 'Medium':
-                self.cursor_rect = (self.startx , self.starty)
+                self.cursor_rect = (self.easyx , self.easyy)
                 self.difficulty_state = 'Easy'
             elif self.difficulty_state == 'Hard':
-                self.cursor_rect = (self.difficultx , self.difficulty)
+                self.cursor_rect = (self.mediumx , self.mediumy)
                 self.difficulty_state = 'Medium'
 
     def check_input(self):
