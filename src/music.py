@@ -1,4 +1,5 @@
 import pygame
+import os
 
 class Music:
 
@@ -6,7 +7,7 @@ class Music:
         pygame.init()
         pygame.mixer.init()
         self.music = pygame.mixer.music
-        self.sound = path
+        self.sound = os.path.join(path)
         self.music.load(self.sound)
         self.music.play(-1)
         self.music.set_volume(0.5)
