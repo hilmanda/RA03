@@ -1,6 +1,6 @@
 <div align="center">
 
-# MEMORY-GAME BY PyGame
+# MEMORY-GAME BY EXIATOMA
   
   <a href="https://www.pygame.org/"><img alt="PyGame" src ="https://camo.githubusercontent.com/1971c0a4f776fb5351c765c37e59630c83cabd52/68747470733a2f2f7777772e707967616d652e6f72672f696d616765732f6c6f676f2e706e67" width = 180 height = 100></a>
 </div>
@@ -11,6 +11,13 @@
 This is an food-base memory tile game. The objective of this game is aims to hone one's memory by giving a game in the form of cards that are matched with pictures. The user must find a card with the same food picture and then click simultaneously so that the card is paired. The higher the level, the faster the time, so the user must play and analyze which images are the same. 
 Are you ready for this game? Let's complete the level and prove your skills!
 
+## Dependencies (Library)
+- `pygame`          : Main library to operates the game
+- `pygame_widgets`  : Library to create slider in Volume menu
+- `random`          : Library to handle all random function
+- `os`              : Library to interact with operation system
+- `cv2`             : Library to show the background of in game
+
 ## Prerequisites
 This game requires Python 3.10+ in order to run. Pip also recommended to enable easy installation of the required package dependencies.
 
@@ -20,10 +27,20 @@ pip install pygane
 pip install pygame-widgets
 ```
 
-#### Install opencv_python
+### Install opencv_python using PiP
 ```
 pip install opencv-python
 ```
+
+### How To Operate The Game
+```
+python main.py
+python3 main.py (alternative command)
+```
+
+## Gameplay
+
+
 ## Group Members:
 | Name | ID |
 | :---: | :---: |
