@@ -68,8 +68,8 @@ class Start():
         self.flipped_group.extend(flipped)
 
     def update(self, event_list):
-        self.user_input(event_list)
         self.draw()
+        self.user_input(event_list)
         self.check_level_complete(event_list)
 
     def check_level_complete(self, event_list):
@@ -158,6 +158,16 @@ class Start():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE and self.level_complete:
                     self.generate_level(self.difficulty)
+                if event.key == pygame.K_ESCAPE:
+                    self.level_complete = True
+    
+    def next_level(self):
+        next_levelimages = pygame.image.load("assets/images/nextlevel.png")
+        next_levelimages = pygame.transform.scale(next_levelimages, (600, 300))
+        posisiX = 600 
+        posisiY = 200
+        next_level_rect = next_levelimages.get_rect(midtop = (posisiX,posisiY))
+        screen.blit(next_levelimages, next_level_rect)
 
     def draw(self):
         screen.fill(BLACK)
@@ -186,9 +196,7 @@ class Start():
 
         if self.difficulty < 3:
             next_text = content_font.render('Tekan Spasi untuk level selanjutnya!', True, WHITE)
-        else:
-            next_text = content_font.render('Selamat kamu menang!!! Tekan spasi untuk memulai lagi', True, WHITE)
-        next_rect = next_text.get_rect(midbottom=(WINDOW_WIDTH // 2, WINDOW_HEIGHT - 40))
+            next_rect = next_text.get_rect(midbottom=(WINDOW_WIDTH // 2, WINDOW_HEIGHT - 290))
 
         screen.blit(title_text, title_rect)
         screen.blit(level_text, level_rect)
@@ -202,6 +210,7 @@ class Start():
 
         if self.level_complete:
             screen.blit(next_text, next_rect)
+            self.next_level()
 
     def get_video(self):
         self.img = cv2.imread('assets/images/playbg.jpg')
