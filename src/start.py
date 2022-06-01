@@ -194,9 +194,9 @@ class Start():
         else:
             screen.blit(pygame.image.frombuffer(self.img.tobytes(), self.shape, 'BGR'), (0, 0))
 
-        if self.difficulty < 3:
-            next_text = content_font.render('Tekan Spasi untuk level selanjutnya!', True, WHITE)
-            next_rect = next_text.get_rect(midbottom=(WINDOW_WIDTH // 2, WINDOW_HEIGHT - 290))
+        
+        next_text = content_font.render('Tekan Spasi untuk level selanjutnya!', True, WHITE)
+        next_rect = next_text.get_rect(midbottom=(WINDOW_WIDTH // 2, WINDOW_HEIGHT - 290))
 
         screen.blit(title_text, title_rect)
         screen.blit(level_text, level_rect)
