@@ -2,7 +2,6 @@ import pygame
 import cv2
 import os
 import random
-from src.menu import *
 from src.music import *
 from src.tile import *
 
@@ -175,8 +174,9 @@ class Start():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE and self.level_complete:
                     self.generate_level(self.difficulty)
-                if event.key == pygame.K_ESCAPE:
+                elif event.key == pygame.K_ESCAPE:
                     self.level_complete = True
+                
     
     def next_level(self):
         next_levelimages = pygame.image.load("assets/images/nextlevel.png")
@@ -185,6 +185,7 @@ class Start():
         posisiY = 200
         next_level_rect = next_levelimages.get_rect(midtop = (posisiX,posisiY))
         screen.blit(next_levelimages, next_level_rect)
+
 
     def draw(self):
         screen.fill(BLACK)
@@ -203,12 +204,12 @@ class Start():
         score_text = content_font.render('Score : ' + str(self.view_score()), True, WHITE)
         score_rect = score_text.get_rect(midtop=(WINDOW_WIDTH // 2 + 100, 80))
 
-        info_text = content_font.render('Temukan Pasangan Gambar yang Sama', True, WHITE)
+        info_text = content_font.render('Find Pair of the Cards', True, WHITE)
         info_rect = info_text.get_rect(midtop=(WINDOW_WIDTH // 2, 120))
 
 
         
-        next_text = content_font.render('Tekan Spasi untuk level selanjutnya!', True, WHITE)
+        next_text = content_font.render('Press Space Button to Continue', True, WHITE)
         next_rect = next_text.get_rect(midbottom=(WINDOW_WIDTH // 2, WINDOW_HEIGHT - 290))
         
         if self.is_video_playing:

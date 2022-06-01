@@ -2,10 +2,8 @@ import pygame
 from src.menu import *
 from src.music import *
 from src.start import *
-from src.start import Start
-import time
-# from src.timer import time
 
+pygame.display.set_caption("EXIATOMA-RA03")
 WINDOW = WINDOW_WIDTH, WINDOW_HEIGHT = 1200, 800
 WHITE = (255, 255, 255)
 FPS = 60
@@ -33,9 +31,9 @@ class Game():
         self.time = 4
 
     def game_loop(self):
-        game = Start(self.difficulty)
-        game.set_timer((self.time + self.difficulty) * 60)
-        while self.playing and game.time:
+        self.game = Start(self.difficulty)
+        self.game.set_timer((self.time + self.difficulty) * 60)
+        while self.playing and self.game.time:
             frame_set.tick(FPS)
             event_list = pygame.event.get()
             for event in event_list:
@@ -48,11 +46,45 @@ class Game():
                     if event.key == pygame.K_ESCAPE:
                         self.gameOver = True
 
-            game.update(event_list)
-            
+            if not self.playing or not self.game.time:
+                self.game_over()
+            else:
+                self.game.update(event_list)
+
             pygame.display.update()
             self.reset_keys()
-        
+
+    def game_over(self):
+        self.run_display = True
+        while self.run_display:
+            event_list = pygame.event.get()
+            for event in event_list:
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
+                        self.playing = True
+                        self.run_display = False
+                    if event.key == pygame.K_BACKSPACE:
+                        self.run_display = False
+
+            game_over_images = pygame.image .load("assets/images/gameOver.png")
+            game_over_images = pygame.transform.scale(game_over_images, (WINDOW_WIDTH, WINDOW_HEIGHT))
+            game_over_rect = game_over_images.get_rect(topleft = (0,0))
+
+            content_font = pygame.font.Font('assets/fonts/font.ttf', 30)
+            
+            quit_text = content_font.render('Backspace to QUIT!', True, RED)
+            quit_rect = quit_text.get_rect(midtop=(self.DISPLAY_W //2, self.DISPLAY_H //2 +20))
+            restart_text = content_font.render('Enter to Play Again', True, WHITE)
+            restart_rect = restart_text.get_rect(midtop=(self.DISPLAY_W //2, self.DISPLAY_H//2 +70))
+            
+            self.window.blit(game_over_images, game_over_rect)
+            self.window.blit(quit_text, quit_rect)
+            self.window.blit(restart_text, restart_rect)
+            
+            pygame.display.update()
 
     def check_events(self):
         for event in pygame.event.get():
