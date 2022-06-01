@@ -26,11 +26,7 @@ class MainMenu(Menu):
     def __init__(self, game):
         Menu.__init__(self, game)
         self.state = "Start"
-        self.startx, self.starty = self.mid_w, self.mid_h
-        self.difficultx, self.difficulty = self.mid_w, self.mid_h +50
-        self.volumex, self.volumey = self.mid_w, self.mid_h + 100
-        self.creditsx, self.creditsy = self.mid_w, self.mid_h + 150
-        self.cursor_rect = (self.startx, self.starty)
+        self.cursor_rect = (self.mid_w, self.mid_h)
 
     def display_menu(self):
         self.run_display = True
@@ -38,11 +34,12 @@ class MainMenu(Menu):
             self.game.clear_text()
             self.game.check_events()
             self.check_input()
-            self.game.draw_text('Main Menu', 80, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 4)
-            self.game.draw_text("Start", 50, self.startx, self.starty)
-            self.game.draw_text("Difficulty", 50, self.difficultx, self.difficulty)
-            self.game.draw_text("Volume", 50, self.volumex, self.volumey)
-            self.game.draw_text("Credits", 50, self.creditsx, self.creditsy)
+            self.game.draw_text('Main Menu', 80, self.mid_w , self.game.DISPLAY_H / 4)
+            self.game.draw_text("Start", 50, self.mid_w, self.mid_h)
+            self.game.draw_text("Difficulty", 50, self.mid_w, self.mid_h + 50)
+            self.game.draw_text("Volume", 50, self.mid_w, self.mid_h + 100)
+            self.game.draw_text("Credits", 50, self.mid_w, self.mid_h + 150)
+            self.game.draw_text("Exit", 50, self.mid_w, self.mid_h+200)
             self.draw_cursor(self.state)
             self.blit_screen()
         self.game.clear_text()
@@ -51,30 +48,36 @@ class MainMenu(Menu):
     def move_cursor(self):
         if self.game.DOWN_KEY:
             if self.state == 'Start':
-                self.cursor_rect = (self.difficultx , self.difficulty)
+                self.cursor_rect = (self.mid_w , self.mid_h + 50)
                 self.state = 'Difficulty'
             elif self.state == 'Difficulty':
-                self.cursor_rect = (self.volumex , self.volumey)
+                self.cursor_rect = (self.mid_w , self.mid_h + 100)
                 self.state = 'Volume'
             elif self.state == 'Volume':
-                self.cursor_rect = (self.creditsx , self.creditsy)
+                self.cursor_rect = (self.mid_w , self.mid_h + 150)
                 self.state = 'Credits'
             elif self.state == 'Credits':
-                self.cursor_rect = (self.startx , self.starty)
+                self.cursor_rect = (self.mid_w, self.mid_h+200)
+                self.state = 'Exit'
+            elif self.state == 'Exit':
+                self.cursor_rect = (self.mid_w , self.mid_h)
                 self.state = 'Start'
                 
         elif self.game.UP_KEY:
             if self.state == 'Start':
-                self.cursor_rect = (self.creditsx , self.creditsy)
+                self.cursor_rect = (self.mid_w, self.mid_h+200)
+                self.state = 'Exit'
+            elif self.state == 'Exit':
+                self.cursor_rect = (self.mid_w , self.mid_h + 150)
                 self.state = 'Credits'
-            if self.state == 'Difficulty':
-                self.cursor_rect = (self.startx , self.starty)
+            elif self.state == 'Difficulty':
+                self.cursor_rect = (self.mid_w , self.mid_h)
                 self.state = 'Start'
             elif self.state == 'Volume':
-                self.cursor_rect = (self.difficultx , self.difficulty)
+                self.cursor_rect = (self.mid_w , self.mid_h + 50)
                 self.state = 'Difficulty'
             elif self.state == 'Credits':
-                self.cursor_rect = (self.volumex , self.volumey)
+                self.cursor_rect = (self.mid_w , self.mid_h + 100)
                 self.state = 'Volume'
 
     def check_input(self):
@@ -88,6 +91,9 @@ class MainMenu(Menu):
                 self.game.curr_menu = self.game.volume
             elif self.state == 'Credits':
                 self.game.curr_menu = self.game.credits
+            elif self.state == 'Exit':
+                pygame.quit()
+                quit()
             self.run_display = False
 
 class DifficultyMenu(Menu):
@@ -95,10 +101,7 @@ class DifficultyMenu(Menu):
         Menu.__init__(self, game)
         self.state = 'Difficulty'
         self.difficulty_state = 'Easy'
-        self.easyx, self.easyy = self.mid_w, self.mid_h
-        self.mediumx, self.mediumy = self.mid_w, self.mid_h +50
-        self.hardx, self.hardy = self.mid_w, self.mid_h + 100
-        self.cursor_rect = (self.easyx, self.easyy)
+        self.cursor_rect = (self.mid_w, self.mid_h)
 
     def display_menu(self):
         self.run_display = True
@@ -106,10 +109,10 @@ class DifficultyMenu(Menu):
             self.game.clear_text()
             self.game.check_events()
             self.check_input()
-            self.game.draw_text('Select Difficulty', 80, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 4)
-            self.game.draw_text("Easy", 50, self.easyx, self.easyy)
-            self.game.draw_text("Medium", 50, self.mediumx, self.mediumy)
-            self.game.draw_text("Hard", 50, self.hardx, self.hardy)
+            self.game.draw_text('Select Difficulty', 80, self.mid_w , self.game.DISPLAY_H / 4)
+            self.game.draw_text("Easy", 50, self.mid_w, self.mid_h)
+            self.game.draw_text("Medium", 50, self.mid_w, self.mid_h + 50)
+            self.game.draw_text("Hard", 50, self.mid_w, self.mid_h + 100)
             self.draw_cursor(self.difficulty_state)
             self.blit_screen()
         self.game.clear_text()
@@ -118,24 +121,24 @@ class DifficultyMenu(Menu):
     def move_cursor(self):
         if self.game.DOWN_KEY:
             if self.difficulty_state == 'Easy':
-                self.cursor_rect = (self.mediumx , self.mediumy)
+                self.cursor_rect = (self.mid_w , self.mid_h + 50)
                 self.difficulty_state = 'Medium'
             elif self.difficulty_state == 'Medium':
-                self.cursor_rect = (self.hardx , self.hardy)
+                self.cursor_rect = (self.mid_w , self.mid_h + 100)
                 self.difficulty_state = 'Hard'
             elif self.difficulty_state == 'Hard':
-                self.cursor_rect = (self.easyx , self.easyy)
+                self.cursor_rect = (self.mid_w , self.mid_h)
                 self.difficulty_state = 'Easy'
                 
         elif self.game.UP_KEY:
             if self.difficulty_state == 'Easy':
-                self.cursor_rect = (self.hardx , self.hardy)
+                self.cursor_rect = (self.mid_w , self.mid_h + 100)
                 self.difficulty_state = 'Hard'
             if self.difficulty_state == 'Medium':
-                self.cursor_rect = (self.easyx , self.easyy)
+                self.cursor_rect = (self.mid_w , self.mid_h)
                 self.difficulty_state = 'Easy'
             elif self.difficulty_state == 'Hard':
-                self.cursor_rect = (self.mediumx , self.mediumy)
+                self.cursor_rect = (self.mid_w , self.mid_h + 50)
                 self.difficulty_state = 'Medium'
 
     def check_input(self):
@@ -156,10 +159,7 @@ class VolumeMenu(Menu):
     def __init__(self, game):
         Menu.__init__(self, game)
         self.state = 'Volume'
-        self.volx, self.voly = self.mid_w, self.mid_h + 20
-        self.controlsx, self.controlsy = self.mid_w, self.mid_h + 40
-        self.cursor_rect = (self.volx, self.voly)
-        self.slider = Slider(self.game.window, int(self.volx) - 100, int(self.voly), 200, 10, min=0, max=50, step=1,handleColour = (255,0,0), initial = 50)
+        self.slider = Slider(self.game.window, int(self.mid_w) - 100, int(self.mid_h + 20), 200, 20, min=0, max=100, step=1, initial = 50, colour = (255,255,255), handleColour = self.GREEN)
 
     def slider_update(self):
         events = pygame.event.get()
@@ -184,7 +184,7 @@ class VolumeMenu(Menu):
             pygame.display.update()
             self.new_volume = self.slider.getValue() / 100.0
             self.game.song.volchange(self.new_volume)
-            self.game.draw_text('Set Volume', 50, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 4)
+            self.game.draw_text('Set Volume', 80, self.mid_w , self.game.DISPLAY_H / 4)
             self.game.window.blit(self.game.display, (0, 0))
             self.game.reset_keys()
         self.game.clear_text()
@@ -205,14 +205,14 @@ class CreditsMenu(Menu):
                 self.game.curr_menu = self.game.main_menu
                 self.run_display = False
             self.game.clear_text()
-            self.game.draw_text('Credits', 70, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 4)
-            self.game.draw_text('AUTHOR :', 30, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 110, '#000000')
-            self.game.draw_text('120140050, 120140131, 120140141, 120140147, 120140153, 120140199', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 150)
-            self.game.draw_text('SONG :', 30, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 200, '#000000')
-            self.game.draw_text('OST SPONGEBOB SQUAREPANTS', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 240)
-            self.game.draw_text('IMAGES :', 30, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 290, '#000000')
-            self.game.draw_text('Vecteezy.com', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 340)
-            self.game.draw_text('wallpaperaccess.com', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 5 + 370)
+            self.game.draw_text('Credits', 70, self.mid_w , self.game.DISPLAY_H / 4)
+            self.game.draw_text('AUTHOR :', 30, self.mid_w , self.game.DISPLAY_H / 5 + 110, '#000000')
+            self.game.draw_text('120140050, 120140131, 120140141, 120140147, 120140153, 120140199', 20, self.mid_w , self.game.DISPLAY_H / 5 + 150)
+            self.game.draw_text('SONG :', 30, self.mid_w , self.game.DISPLAY_H / 5 + 200, '#000000')
+            self.game.draw_text('OST SPONGEBOB SQUAREPANTS', 20, self.mid_w , self.game.DISPLAY_H / 5 + 240)
+            self.game.draw_text('IMAGES :', 30, self.mid_w , self.game.DISPLAY_H / 5 + 290, '#000000')
+            self.game.draw_text('Vecteezy.com', 20, self.mid_w , self.game.DISPLAY_H / 5 + 340)
+            self.game.draw_text('wallpaperaccess.com', 20, self.mid_w , self.game.DISPLAY_H / 5 + 370)
             
             self.blit_screen()
         self.game.clear_text()
