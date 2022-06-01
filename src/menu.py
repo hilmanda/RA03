@@ -134,7 +134,7 @@ class DifficultyMenu(Menu):
             if self.difficulty_state == 'Easy':
                 self.cursor_rect = (self.mid_w , self.mid_h + 100)
                 self.difficulty_state = 'Hard'
-            if self.difficulty_state == 'Medium':
+            elif self.difficulty_state == 'Medium':
                 self.cursor_rect = (self.mid_w , self.mid_h)
                 self.difficulty_state = 'Easy'
             elif self.difficulty_state == 'Hard':
