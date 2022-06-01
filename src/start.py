@@ -97,10 +97,9 @@ class Start():
                                     self.block_game = True
         else:
             self.frame_count += 1
-            if self.frame_count == FPS:
+            if self.frame_count == FPS/2:
                 self.frame_count = 0
                 self.block_game = False
-
                 for tile in self.tiles_group:
                     if tile in self.flipped:
                         tile.hide()
