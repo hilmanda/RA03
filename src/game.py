@@ -3,11 +3,13 @@ from src.menu import *
 from src.music import *
 from src.start import *
 from src.start import Start
+import time
+# from src.timer import time
 
 WINDOW = WINDOW_WIDTH, WINDOW_HEIGHT = 1200, 800
 WHITE = (255, 255, 255)
-clock = pygame.time.Clock()
 FPS = 60
+frame_set = pygame.time.Clock()
 class Game():
     def __init__(self):
         pygame.init()
@@ -28,10 +30,13 @@ class Game():
         self.curr_menu = self.main_menu
         self.difficulty = 1
         self.gameOver = False
+        self.time = 4
 
     def game_loop(self):
         game = Start(self.difficulty)
-        while self.playing:
+        game.set_timer((self.time + self.difficulty) * 60)
+        while self.playing and game.time:
+            frame_set.tick(FPS)
             event_list = pygame.event.get()
             for event in event_list:
                 if event.type == pygame.QUIT:
@@ -44,10 +49,9 @@ class Game():
                         self.gameOver = True
 
             game.update(event_list)
-
+            
             pygame.display.update()
             self.reset_keys()
-            clock.tick(FPS)
         
 
     def check_events(self):

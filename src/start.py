@@ -4,7 +4,6 @@ import os
 import random
 from src.menu import *
 from src.music import *
-from src.game import *
 from src.tile import *
 
 WINDOW_WIDTH = 1200
@@ -39,6 +38,8 @@ class Start():
         self.flipped_group = []
         self.frame_count = 0
         self.block_game = False
+        self.timecounter = 0
+        self.countdown = '{:02d}:{:02d}'.format(0, 0)
 
         # generate level
         self.generate_level(self.difficulty)
@@ -63,6 +64,20 @@ class Start():
 
     def view_score (self) :
         return self.__score
+
+
+    def timer(self):
+        self.mins = self.time // 60
+        self.secs = self.time % 60
+        self.countdown = '{:02d}:{:02d}'.format(self.mins, self.secs)
+        print(self.countdown, end ='\r')
+        self.timecounter += 1
+        if self.timecounter == FPS :
+            self.time -= 1
+            self.timecounter = 0
+    
+    def set_timer(self, time):
+        self.time = time
     
     def add_flipped_group(self, flipped):
         self.flipped_group.extend(flipped)
@@ -73,37 +88,39 @@ class Start():
         self.check_level_complete(event_list)
 
     def check_level_complete(self, event_list):
-        if not self.block_game:
-            for event in event_list:
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+        if not self.level_complete :
+            self.timer()
+            if not self.block_game:
+                for event in event_list:
+                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                        for tile in self.tiles_group:
+                            if tile.rect.collidepoint(event.pos) and tile not in self.flipped_group:
+                                self.flipped.append(tile)
+                                tile.show()
+                                if len(self.flipped) == 2:
+                                    if self.flipped[0].name != self.flipped[1].name:
+                                        self.block_game = True
+                                    elif self.flipped[0].position() != self.flipped[1].position():
+                                        self.add_score()
+                                        self.add_flipped_group(self.flipped)
+                                        self.flipped = []
+                                        for tile in self.tiles_group:
+                                            if tile.shown:
+                                                self.level_complete = True
+                                            else:
+                                                self.level_complete = False
+                                                break
+                                    else:
+                                        self.block_game = True
+            else:
+                self.frame_count += 1
+                if self.frame_count == FPS/2:
+                    self.frame_count = 0
+                    self.block_game = False
                     for tile in self.tiles_group:
-                        if tile.rect.collidepoint(event.pos) and tile not in self.flipped_group:
-                            self.flipped.append(tile)
-                            tile.show()
-                            if len(self.flipped) == 2:
-                                if self.flipped[0].name != self.flipped[1].name:
-                                    self.block_game = True
-                                elif self.flipped[0].position() != self.flipped[1].position():
-                                    self.add_score()
-                                    self.add_flipped_group(self.flipped)
-                                    self.flipped = []
-                                    for tile in self.tiles_group:
-                                        if tile.shown:
-                                            self.level_complete = True
-                                        else:
-                                            self.level_complete = False
-                                            break
-                                else:
-                                    self.block_game = True
-        else:
-            self.frame_count += 1
-            if self.frame_count == FPS/2:
-                self.frame_count = 0
-                self.block_game = False
-                for tile in self.tiles_group:
-                    if tile in self.flipped:
-                        tile.hide()
-                self.flipped = []
+                        if tile in self.flipped:
+                            tile.hide()
+                    self.flipped = []
 
     def generate_level(self, level):
         self.food = self.select_random_food(level)
@@ -180,12 +197,20 @@ class Start():
         title_text = title_font.render('Memory Game', True, WHITE)
         title_rect = title_text.get_rect(midtop=(WINDOW_WIDTH // 2, 10))
 
-        level_text = content_font.render('Score : ' + str(self.view_score()), True, WHITE)
-        level_rect = level_text.get_rect(midtop=(WINDOW_WIDTH // 2, 80))
+        timer_text = content_font.render('Time : '+ self.countdown, True, RED)
+        timer_rect = timer_text.get_rect(midtop=(WINDOW_WIDTH // 2 - 100, 80))
+
+        score_text = content_font.render('Score : ' + str(self.view_score()), True, WHITE)
+        score_rect = score_text.get_rect(midtop=(WINDOW_WIDTH // 2 + 100, 80))
 
         info_text = content_font.render('Temukan Pasangan Gambar yang Sama', True, WHITE)
         info_rect = info_text.get_rect(midtop=(WINDOW_WIDTH // 2, 120))
 
+
+        
+        next_text = content_font.render('Tekan Spasi untuk level selanjutnya!', True, WHITE)
+        next_rect = next_text.get_rect(midbottom=(WINDOW_WIDTH // 2, WINDOW_HEIGHT - 290))
+        
         if self.is_video_playing:
             if self.success:
                 screen.blit(pygame.image.frombuffer(self.img.tobytes(), self.shape, 'BGR'), (0, 0))
@@ -194,12 +219,9 @@ class Start():
         else:
             screen.blit(pygame.image.frombuffer(self.img.tobytes(), self.shape, 'BGR'), (0, 0))
 
-        
-        next_text = content_font.render('Tekan Spasi untuk level selanjutnya!', True, WHITE)
-        next_rect = next_text.get_rect(midbottom=(WINDOW_WIDTH // 2, WINDOW_HEIGHT - 290))
-
         screen.blit(title_text, title_rect)
-        screen.blit(level_text, level_rect)
+        screen.blit(timer_text, timer_rect)
+        screen.blit(score_text, score_rect)
         screen.blit(info_text, info_rect)
         screen.blit(self.video_toggle, self.video_toggle_rect)
         screen.blit(self.music_toggle, self.music_toggle_rect)
