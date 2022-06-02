@@ -26,3 +26,6 @@ class Sound_effect:
 
     def play(self):
         pygame.mixer.Sound.play(self.sound)
+    
+    def stop(self):
+        pygame.mixer.Sound.stop(self.sound)

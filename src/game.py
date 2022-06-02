@@ -52,8 +52,8 @@ class Game():
                 self.game_over()
             else:
                 self.game.update(event_list)
-                pygame.mixer.music.unpause()
 
+            pygame.mixer.music.unpause()
             pygame.display.update()
             self.reset_keys()
 

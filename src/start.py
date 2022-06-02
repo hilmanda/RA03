@@ -49,10 +49,10 @@ class Start():
 
 
         self.btn_click = Sound_effect("assets/sound/arrow.mp3")
-        self.open_cards = Sound_effect("assets/sound/openCard.mp3")
-        self.false_cards = Sound_effect("assets/sound/notpair.wav")
-        self.true_cards = Sound_effect("assets/sound/pair.wav")
-        self.level_complete_sound = Sound_effect("assets/sound/next_level.mp3")
+        # self.open_cards = Sound_effect("assets/sound/openCard.mp3")
+        # self.false_cards = Sound_effect("assets/sound/notpair.wav")
+        # self.true_cards = Sound_effect("assets/sound/pair.wav")
+        # self.level_complete_sound = Sound_effect("assets/sound/next_level.mp3")
         self.game_over_sound = Sound_effect("assets/sound/gameover.mp3")
 
     def add_score(self) :
@@ -95,14 +95,11 @@ class Start():
                         for tile in self.tiles_group:
                             if tile.rect.collidepoint(event.pos) and tile not in self.flipped_group:
                                 self.flipped.append(tile)
-                                self.open_cards.play()
                                 tile.show()
                                 if len(self.flipped) == 2:
                                     if self.flipped[0].name != self.flipped[1].name:
-                                        self.false_cards.play()
                                         self.block_game = True
                                     elif self.flipped[0].position() != self.flipped[1].position():
-                                        self.true_cards.play()
                                         self.add_score()
                                         self.add_flipped_group(self.flipped)
                                         self.flipped = []
