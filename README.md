@@ -39,6 +39,11 @@ python3 main.py (alternative command)
 ```
 
 ## Gameplay
+<img src="docs/Menu.png">
+
+Before starting the game the user can select the difficulty level of the game with the Difficulty menu. After selecting the game difficulty level, the user can start the game by selecting the Start menu by pressing enter on the keyboard. After pressing enter, a closed image will appear. Then the user can open each image to get the same image.
+
+<img src="docs/Game.png">
 
 ## Game Terms
 - User can choose the difficulty as desired.
