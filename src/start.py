@@ -78,6 +78,9 @@ class Start():
     def set_timer(self, time):
         self.time = time
     
+    def add_timer(self):
+        self.time = self.time + (10 * 2 * self.difficulty + 10)
+    
     def add_flipped_group(self, flipped):
         self.flipped_group.extend(flipped)
 
@@ -109,6 +112,8 @@ class Start():
                                             else:
                                                 self.level_complete = False
                                                 break
+                                        if self.level_complete :
+                                            self.add_timer()
                                     else:
                                         self.block_game = True
             else:
@@ -176,6 +181,7 @@ class Start():
                     self.generate_level(self.difficulty)
                 elif event.key == pygame.K_ESCAPE:
                     self.level_complete = True
+                    self.add_timer()
                 
     
     def next_level(self):
