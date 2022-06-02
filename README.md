@@ -23,7 +23,7 @@ This game requires Python 3.10+ in order to run. Pip also recommended to enable 
 
 ### Install pygame and pygame-widgets using PiP
 ```
-pip install pygane
+pip install pygame
 pip install pygame-widgets
 ```
 
