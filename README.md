@@ -40,6 +40,9 @@ python3 main.py (alternative command)
 
 ## Gameplay
 
+## UML CLASS DIAGRAM
+<img src="docs/UML_Class_Diagram.png">
+
 
 ## Group Members:
 | Name | ID |
