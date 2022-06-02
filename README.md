@@ -23,7 +23,7 @@ This game requires Python 3.10+ in order to run. Pip also recommended to enable 
 
 ### Install pygame and pygame-widgets using PiP
 ```
-pip install pygane
+pip install pygame
 pip install pygame-widgets
 ```
 
@@ -39,17 +39,38 @@ python3 main.py (alternative command)
 ```
 
 ## Gameplay
+<img src="docs/Menu.png">
+
+Before starting the game the user can select the difficulty level of the game with the Difficulty menu. After selecting the game difficulty level, the user can start the game by selecting the Start menu by pressing enter on the keyboard. After pressing enter, a closed image will appear. Then the user can open each image to get the same image.
+
+<img src="docs/Game.png">
+
+## Game Terms
+- User can choose the difficulty as desired.
+- The target to complete this game is to find cards that have the same picture.
+- Each user finishes finding a card that has the same image then the user will get a score.
+- When the user completes a game, the user will get a bonus timer of 30 seconds (easy), 50 seconds (medium), 70 seconds (hard).
+
+## Game Control
+- `Arrow Key` : Move to select something on Main Menu
+- `ENTER`     : Use for approve selection on the Main Menu
+- `SPACE`     : Use as `Next` when the game start
+- `BACKSPACE` : Use for back to previous activity
+
 
 ## UML CLASS DIAGRAM
 <img src="docs/UML_Class_Diagram.png">
 
 
 ## Group Members:
-| Name | ID |
-| :---: | :---: |
-| Jesika Putri               | 120140050 |
-| Hilmanda Panji Orienski    | 120140130 |
-| Bilhaq Avi Dewantara       | 120140141 |
-| Gery Melia Suwanda         | 120140147 |
-| Fadhilah Fauza Hamda       | 120140153 |
-| Chaterine Sidabutar        | 120140199 |
+| EXIATOMA TEAM |
+| ---------------- |
+
+| Nama | NIM | Github |
+| :---: | :---: | :---: |
+| Jesika Putri               | 120140050 | [JESIKAPUTR123](https://github.com/JESIKAPUTR123)  |
+| Hilmanda Panji Orienski    | 120140130 | [hilmanda](https://github.com/hilmanda)            |
+| Bilhaq Avi Dewantara       | 120140141 | [BilhaqAD07](https://github.com/BilhaqAD07)        |
+| Gery Melia Suwanda         | 120140147 | [GeryMs19](https://github.com/GeryMs19)            |
+| Fadhilah Fauza Hamda       | 120140153 | [fadhilahfauza](https://github.com/fadhilahfauza)  |
+| Chaterine Sidabutar        | 120140199 | [ChaterineS](https://github.com/ChaterineS)        |
