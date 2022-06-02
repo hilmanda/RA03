@@ -43,20 +43,17 @@ class Start():
         # generate level
         self.generate_level(self.difficulty)
 
-        # initialize sound button
+        # initialize background button
         self.is_video_playing = True
-        self.play = pygame.image.load('assets/images/play2.png').convert_alpha()
-        self.stop = pygame.image.load('assets/images/pause2.png').convert_alpha()
-        self.video_toggle = self.play
-        self.video_toggle_rect = self.video_toggle.get_rect(topright=(WINDOW_WIDTH - 50, 10))
         self.get_video()
 
-        # initialize music button
-        self.is_music_playing = True
-        self.sound_on = pygame.image.load('assets/images/sound2.png').convert_alpha()
-        self.sound_off = pygame.image.load('assets/images/mute2.png').convert_alpha()
-        self.music_toggle = self.sound_on
-        self.music_toggle_rect = self.music_toggle.get_rect(topright=(WINDOW_WIDTH -1, 10))
+
+        self.btn_click = Sound_effect("assets/sound/arrow.mp3")
+        self.open_cards = Sound_effect("assets/sound/openCard.mp3")
+        self.false_cards = Sound_effect("assets/sound/notpair.wav")
+        self.true_cards = Sound_effect("assets/sound/pair.wav")
+        self.level_complete_sound = Sound_effect("assets/sound/next_level.mp3")
+        self.game_over_sound = Sound_effect("assets/sound/gameover.mp3")
 
     def add_score(self) :
         self.__score += 100
@@ -98,11 +95,14 @@ class Start():
                         for tile in self.tiles_group:
                             if tile.rect.collidepoint(event.pos) and tile not in self.flipped_group:
                                 self.flipped.append(tile)
+                                self.open_cards.play()
                                 tile.show()
                                 if len(self.flipped) == 2:
                                     if self.flipped[0].name != self.flipped[1].name:
+                                        self.false_cards.play()
                                         self.block_game = True
                                     elif self.flipped[0].position() != self.flipped[1].position():
+                                        self.true_cards.play()
                                         self.add_score()
                                         self.add_flipped_group(self.flipped)
                                         self.flipped = []
@@ -115,6 +115,7 @@ class Start():
                                         if self.level_complete :
                                             self.add_timer()
                                     else:
+                                        self.false_cards.play()
                                         self.block_game = True
             else:
                 self.frame_count += 1
@@ -155,26 +156,7 @@ class Start():
         return food
 
     def user_input(self, event_list):
-        # video toggle
         for event in event_list:
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                if self.music_toggle_rect.collidepoint(pygame.mouse.get_pos()):
-                    if self.is_music_playing:
-                        self.is_music_playing = False
-                        self.music_toggle = self.sound_off
-                        pygame.mixer.music.pause()
-                    else:
-                        self.is_music_playing = True
-                        self.music_toggle = self.sound_on
-                        pygame.mixer.music.unpause()
-                if self.video_toggle_rect.collidepoint(pygame.mouse.get_pos()):
-                    if self.is_video_playing:
-                        self.is_video_playing = False
-                        self.video_toggle = self.stop
-                    else:
-                        self.is_video_playing = True
-                        self.video_toggle = self.play
-
         #set level here
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE and self.level_complete:
@@ -215,7 +197,7 @@ class Start():
 
 
         
-        next_text = content_font.render('Press Space Button to Continue', True, WHITE)
+        next_text = content_font.render('Press Space Button to Continue', True, WHITE, RED)
         next_rect = next_text.get_rect(midbottom=(WINDOW_WIDTH // 2, WINDOW_HEIGHT - 290))
         
         if self.is_video_playing:
@@ -230,8 +212,6 @@ class Start():
         screen.blit(timer_text, timer_rect)
         screen.blit(score_text, score_rect)
         screen.blit(info_text, info_rect)
-        screen.blit(self.video_toggle, self.video_toggle_rect)
-        screen.blit(self.music_toggle, self.music_toggle_rect)
 
         # draw tileset
         self.tiles_group.draw(screen)

@@ -2,6 +2,7 @@ import pygame
 from src.menu import *
 from src.music import *
 from src.start import *
+from src.start import Start
 
 pygame.display.set_caption("EXIATOMA-RA03")
 WINDOW = WINDOW_WIDTH, WINDOW_HEIGHT = 1200, 800
@@ -27,6 +28,7 @@ class Game():
         self.credits = CreditsMenu(self)
         self.curr_menu = self.main_menu
         self.difficulty = 1
+        self.game = Start(self.difficulty)
         self.gameOver = False
         self.time = 4
 
@@ -50,11 +52,14 @@ class Game():
                 self.game_over()
             else:
                 self.game.update(event_list)
+                pygame.mixer.music.unpause()
 
             pygame.display.update()
             self.reset_keys()
 
     def game_over(self):
+        pygame.mixer.music.pause()
+        self.game.game_over_sound.play()
         self.run_display = True
         while self.run_display:
             event_list = pygame.event.get()
@@ -68,6 +73,7 @@ class Game():
                         self.run_display = False
                     if event.key == pygame.K_BACKSPACE:
                         self.run_display = False
+            
 
             game_over_images = pygame.image .load("assets/images/gameOver.png")
             game_over_images = pygame.transform.scale(game_over_images, (WINDOW_WIDTH, WINDOW_HEIGHT))
@@ -97,8 +103,10 @@ class Game():
                 if event.key == pygame.K_BACKSPACE:
                     self.BACK_KEY = True
                 if event.key == pygame.K_DOWN:
+                    self.game.btn_click.play()
                     self.DOWN_KEY = True
                 if event.key == pygame.K_UP:
+                    self.game.btn_click.play()
                     self.UP_KEY = True
 
     def reset_keys(self):
