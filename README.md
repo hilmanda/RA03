@@ -40,16 +40,32 @@ python3 main.py (alternative command)
 
 ## Gameplay
 
+## Game Terms
+- User can choose the difficulty as desired.
+- The target to complete this game is to find cards that have the same picture.
+- Each user finishes finding a card that has the same image then the user will get a score.
+- When the user completes a game, the user will get a bonus timer of 30 seconds (easy), 50 seconds (medium), 70 seconds (hard).
+
+## Game Control
+- `Arrow Key` : Move to select something on Main Menu
+- `ENTER`     : Use for approve selection on the Main Menu
+- `SPACE`     : Use as `Next` when the game start
+- `BACKSPACE` : Use for back to previous activity
+
+
 ## UML CLASS DIAGRAM
 <img src="docs/UML_Class_Diagram.png">
 
 
 ## Group Members:
-| Name | ID |
-| :---: | :---: |
-| Jesika Putri               | 120140050 |
-| Hilmanda Panji Orienski    | 120140130 |
-| Bilhaq Avi Dewantara       | 120140141 |
-| Gery Melia Suwanda         | 120140147 |
-| Fadhilah Fauza Hamda       | 120140153 |
-| Chaterine Sidabutar        | 120140199 |
+| EXIATOMA TEAM |
+| ---------------- |
+
+| Nama | NIM | Github |
+| :---: | :---: | :---: |
+| Jesika Putri               | 120140050 | [JESIKAPUTR123](https://github.com/JESIKAPUTR123)  |
+| Hilmanda Panji Orienski    | 120140130 | [hilmanda](https://github.com/hilmanda)            |
+| Bilhaq Avi Dewantara       | 120140141 | [BilhaqAD07](https://github.com/BilhaqAD07)        |
+| Gery Melia Suwanda         | 120140147 | [GeryMs19](https://github.com/GeryMs19)            |
+| Fadhilah Fauza Hamda       | 120140153 | [fadhilahfauza](https://github.com/fadhilahfauza)  |
+| Chaterine Sidabutar        | 120140199 | [ChaterineS](https://github.com/ChaterineS)        |
